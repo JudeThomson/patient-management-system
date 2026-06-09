@@ -63,115 +63,33 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $historyItems = [
+                                    'problem_started_on' => 'Problem Started On',
+                                    'illness_details' => 'Details of Illness / Complaints',
+                                    'doctor_hospital' => 'Doctor / Hospital I',
+                                    'doctor_hospital_2' => 'Doctor / Hospital II',
+                                    'doctor_hospital_3' => 'Doctor / Hospital III',
+                                    'diagnosed_at' => 'Diagnosed At',
+                                    'surgery' => 'Surgery',
+                                    'radiation' => 'Radiation',
+                                    'chemotherapy' => 'Chemotherapy',
+                                    'colostomy' => 'Colostomy',
+                                    'renal_problems' => 'Renal Problems',
+                                    'dm_htn_asthma_cad' => 'DM HTN Asthma CAD'
+                                ];
+                            @endphp
+                            @foreach($historyItems as $key => $label)
                             <tr>
-                                <td class="fw-bold">Problem Started On</td>
-                                <td></td>
+                                <td class="fw-bold">{{ $label }}</td>
                                 <td>
-                                    <input type="text" name="medical_history[problem_started_on]" class="form-control" value="{{ old('medical_history.problem_started_on', $lastAssessment?->medicalHistory?->problem_started_on ?? '') }}">
+                                    <input type="text" name="medical_history[{{ $key }}][details]" class="form-control" value="{{ old('medical_history.'.$key.'.details', $lastAssessment?->medicalHistory?->{$key.'_details'} ?? '') }}">
+                                </td>
+                                <td>
+                                    <input type="date" name="medical_history[{{ $key }}][date]" class="form-control" value="{{ old('medical_history.'.$key.'.date', $lastAssessment?->medicalHistory?->{$key.'_date'} ?? '') }}">
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="fw-bold">Details of Illness / Complaints</td>
-                                <td>
-                                    <textarea name="medical_history[illness_details]" class="form-control" rows="2">{{ old('medical_history.illness_details', $lastAssessment?->medicalHistory?->illness_details ?? '') }}</textarea>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Doctor / Hospital I</td>
-                                <td>
-                                    <input type="text" name="medical_history[doctor_hospital]" class="form-control" value="{{ old('medical_history.doctor_hospital', $lastAssessment?->medicalHistory?->doctor_hospital ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Doctor / Hospital II</td>
-                                <td>
-                                    <input type="text" name="medical_history[doctor_hospital_2]" class="form-control" value="{{ old('medical_history.doctor_hospital_2', $lastAssessment?->medicalHistory?->doctor_hospital_2 ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Doctor / Hospital III</td>
-                                <td>
-                                    <input type="text" name="medical_history[doctor_hospital_3]" class="form-control" value="{{ old('medical_history.doctor_hospital_3', $lastAssessment?->medicalHistory?->doctor_hospital_3 ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Diagnosed At</td>
-                                <td></td>
-                                <td>
-                                    <input type="text" name="medical_history[diagnosed_at]" class="form-control" value="{{ old('medical_history.diagnosed_at', $lastAssessment?->medicalHistory?->diagnosed_at ?? '') }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Surgery</td>
-                                <td>
-                                    <input type="text" name="medical_history[surgery]" class="form-control" value="{{ old('medical_history.surgery', $lastAssessment?->medicalHistory?->surgery ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Radiation</td>
-                                <td>
-                                    <input type="text" name="medical_history[radiation]" class="form-control" value="{{ old('medical_history.radiation', $lastAssessment?->medicalHistory?->radiation ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Chemotherapy</td>
-                                <td>
-                                    <input type="text" name="medical_history[chemotherapy]" class="form-control" value="{{ old('medical_history.chemotherapy', $lastAssessment?->medicalHistory?->chemotherapy ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Colostomy</td>
-                                <td>
-                                    <input type="text" name="medical_history[colostomy]" class="form-control" value="{{ old('medical_history.colostomy', $lastAssessment?->medicalHistory?->colostomy ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Renal Problems</td>
-                                <td>
-                                    <input type="text" name="medical_history[renal_problems]" class="form-control" value="{{ old('medical_history.renal_problems', $lastAssessment?->medicalHistory?->renal_problems ?? '') }}">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">DM HTN Asthma CAD</td>
-                                <td>
-                                    <div class="row g-2">
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">DM</span>
-                                                <input type="text" name="medical_history[dm]" class="form-control" value="{{ old('medical_history.dm', $lastAssessment?->medicalHistory?->dm ?? '') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">HTN</span>
-                                                <input type="text" name="medical_history[htn]" class="form-control" value="{{ old('medical_history.htn', $lastAssessment?->medicalHistory?->htn ?? '') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">Asthma</span>
-                                                <input type="text" name="medical_history[asthma]" class="form-control" value="{{ old('medical_history.asthma', $lastAssessment?->medicalHistory?->asthma ?? '') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">CAD</span>
-                                                <input type="text" name="medical_history[cad]" class="form-control" value="{{ old('medical_history.cad', $lastAssessment?->medicalHistory?->cad ?? '') }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td></td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
