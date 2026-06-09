@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid">
+
     <div class="row mb-4">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <nav aria-label="breadcrumb">
@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Edit Assessment</li>
                 </ol>
             </nav>
-            <h2 class="h4 medical-blue mb-0">Edit Assessment</h2>
+            <h2 class="h4 medical-blue mb-0">Edit Patient Assessment</h2>
         </div>
     </div>
 
@@ -42,13 +42,13 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Centre <span class="text-danger">*</span></label>
-                        <input type="text" name="centre" class="form-control" value="{{ old('centre', $assessment->centre) }}" required>
+                        <input type="text" name="centre" class="form-control" value="{{ old('centre', $assessment->centre) }}" placeholder="e.g. Main Hospital, Clinic A" required>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Past Medical History Redesigned as Table -->
+        <!-- Past Medical History -->
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-header bg-white py-3">
                 <h5 class="mb-0 text-primary"><i class="fas fa-history me-2"></i>Past Medical History</h5>
@@ -64,109 +64,33 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $historyItems = [
+                                    'problem_started_on' => 'Problem Started On',
+                                    'illness_details' => 'Details of Illness / Complaints',
+                                    'doctor_hospital' => 'Doctor / Hospital I',
+                                    'doctor_hospital_2' => 'Doctor / Hospital II',
+                                    'doctor_hospital_3' => 'Doctor / Hospital III',
+                                    'diagnosed_at' => 'Diagnosed At',
+                                    'surgery' => 'Surgery',
+                                    'radiation' => 'Radiation',
+                                    'chemotherapy' => 'Chemotherapy',
+                                    'colostomy' => 'Colostomy',
+                                    'renal_problems' => 'Renal Problems',
+                                    'dm_htn_asthma_cad' => 'DM HTN Asthma CAD'
+                                ];
+                            @endphp
+                            @foreach($historyItems as $key => $label)
                             <tr>
-                                <td class="fw-bold">Problem Started On</td>
-                                <td colspan="2">
-                                    <input type="text" name="medical_history[problem_started_on]" class="form-control" value="{{ old('medical_history.problem_started_on', $assessment->medicalHistory->problem_started_on ?? '') }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Details of Illness / Complaints</td>
-                                <td colspan="2">
-                                    <textarea name="medical_history[illness_details]" class="form-control" rows="2">{{ old('medical_history.illness_details', $assessment->medicalHistory->illness_details ?? '') }}</textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Doctor / Hospital I</td>
-                                <td colspan="2">
-                                    <input type="text" name="medical_history[doctor_hospital]" class="form-control" value="{{ old('medical_history.doctor_hospital', $assessment->medicalHistory->doctor_hospital ?? '') }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Doctor / Hospital II</td>
-                                <td colspan="2">
-                                    <input type="text" name="medical_history[doctor_hospital_2]" class="form-control" value="{{ old('medical_history.doctor_hospital_2', $assessment->medicalHistory->doctor_hospital_2 ?? '') }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Doctor / Hospital III</td>
-                                <td colspan="2">
-                                    <input type="text" name="medical_history[doctor_hospital_3]" class="form-control" value="{{ old('medical_history.doctor_hospital_3', $assessment->medicalHistory->doctor_hospital_3 ?? '') }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Diagnosed At</td>
+                                <td class="fw-bold">{{ $label }}</td>
                                 <td>
-                                    <input type="text" name="medical_history[diagnosed_at]" class="form-control" value="{{ old('medical_history.diagnosed_at', $assessment->medicalHistory->diagnosed_at ?? '') }}">
+                                    <input type="text" name="medical_history[{{ $key }}][details]" class="form-control" value="{{ old('medical_history.'.$key.'.details', $assessment->medicalHistory?->{$key.'_details'} ?? '') }}">
                                 </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Surgery</td>
                                 <td>
-                                    <input type="text" name="medical_history[surgery]" class="form-control" value="{{ old('medical_history.surgery', $assessment->medicalHistory->surgery ?? '') }}">
-                                </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Radiation</td>
-                                <td>
-                                    <input type="text" name="medical_history[radiation]" class="form-control" value="{{ old('medical_history.radiation', $assessment->medicalHistory->radiation ?? '') }}">
-                                </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Chemotherapy</td>
-                                <td>
-                                    <input type="text" name="medical_history[chemotherapy]" class="form-control" value="{{ old('medical_history.chemotherapy', $assessment->medicalHistory->chemotherapy ?? '') }}">
-                                </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Colostomy</td>
-                                <td>
-                                    <input type="text" name="medical_history[colostomy]" class="form-control" value="{{ old('medical_history.colostomy', $assessment->medicalHistory->colostomy ?? '') }}">
-                                </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Renal Problems</td>
-                                <td>
-                                    <input type="text" name="medical_history[renal_problems]" class="form-control" value="{{ old('medical_history.renal_problems', $assessment->medicalHistory->renal_problems ?? '') }}">
-                                </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">DM HTN Asthma CAD</td>
-                                <td colspan="2">
-                                    <div class="row g-2">
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">DM</span>
-                                                <input type="text" name="medical_history[dm]" class="form-control" value="{{ old('medical_history.dm', $assessment->medicalHistory->dm ?? '') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">HTN</span>
-                                                <input type="text" name="medical_history[htn]" class="form-control" value="{{ old('medical_history.htn', $assessment->medicalHistory->htn ?? '') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">Asthma</span>
-                                                <input type="text" name="medical_history[asthma]" class="form-control" value="{{ old('medical_history.asthma', $assessment->medicalHistory->asthma ?? '') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-text">CAD</span>
-                                                <input type="text" name="medical_history[cad]" class="form-control" value="{{ old('medical_history.cad', $assessment->medicalHistory->cad ?? '') }}">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input type="date" name="medical_history[{{ $key }}][date]" class="form-control" value="{{ old('medical_history.'.$key.'.date', $assessment->medicalHistory?->{$key.'_date'} ?? '') }}">
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -182,19 +106,19 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Diabetes Medicine</label>
-                        <textarea name="medication[diabetes_medicine]" class="form-control" rows="2">{{ old('medication.diabetes_medicine', $assessment->medication->diabetes_medicine ?? '') }}</textarea>
+                        <textarea name="medication[diabetes_medicine]" class="form-control" rows="2">{{ old('medication.diabetes_medicine', $assessment->medication?->diabetes_medicine ?? '') }}</textarea>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">BP Medicine</label>
-                        <textarea name="medication[bp_medicine]" class="form-control" rows="2">{{ old('medication.bp_medicine', $assessment->medication->bp_medicine ?? '') }}</textarea>
+                        <textarea name="medication[bp_medicine]" class="form-control" rows="2">{{ old('medication.bp_medicine', $assessment->medication?->bp_medicine ?? '') }}</textarea>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Chemo Medicine</label>
-                        <textarea name="medication[chemo_medicine]" class="form-control" rows="2">{{ old('medication.chemo_medicine', $assessment->medication->chemo_medicine ?? '') }}</textarea>
+                        <textarea name="medication[chemo_medicine]" class="form-control" rows="2">{{ old('medication.chemo_medicine', $assessment->medication?->chemo_medicine ?? '') }}</textarea>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Pain Medicine</label>
-                        <textarea name="medication[pain_medicine]" class="form-control" rows="2">{{ old('medication.pain_medicine', $assessment->medication->pain_medicine ?? '') }}</textarea>
+                        <textarea name="medication[pain_medicine]" class="form-control" rows="2">{{ old('medication.pain_medicine', $assessment->medication?->pain_medicine ?? '') }}</textarea>
                     </div>
                 </div>
             </div>
@@ -208,18 +132,17 @@
             <div class="card-body">
                 <div class="row">
                     @php
-                        $symptomsList = [
+                        $symptoms = [
                             'Nausea', 'Vomiting', 'Swallowing Difficulty', 'Heart Burn', 
                             'Constipation', 'Cough', 'Sore Mouth', 'Swelling', 
                             'Ulcer', 'Bleeding', 'Lymphoedema', 'Urinary Symptoms', 
                             'Delirium', 'Breathlessness', 'Tiredness', 'Sleeplessness', 'Drowsiness'
                         ];
-                        $selectedSymptoms = $assessment->symptoms->pluck('symptom_name')->toArray();
                     @endphp
-                    @foreach($symptomsList as $symptom)
+                    @foreach($symptoms as $symptom)
                         <div class="col-md-3 mb-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="symptoms[]" value="{{ $symptom }}" id="symp_{{ $loop->index }}" {{ in_array($symptom, old('symptoms', $selectedSymptoms)) ? 'checked' : '' }}>
+                                <input class="form-check-input" type="checkbox" name="symptoms[]" value="{{ $symptom }}" id="symp_{{ $loop->index }}" {{ is_array(old('symptoms', $assessment->symptoms->pluck('symptom_name')->toArray())) && in_array($symptom, old('symptoms', $assessment->symptoms->pluck('symptom_name')->toArray())) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="symp_{{ $loop->index }}">
                                     {{ $symptom }}
                                 </label>
@@ -256,19 +179,12 @@
                 <h5 class="mb-0 text-primary"><i class="fas fa-comment-medical me-2"></i>Presenting Complaints</h5>
             </div>
             <div class="card-body">
-                @php $complaints = $assessment->complaints->pluck('complaint_text')->toArray(); @endphp
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Complaint 1</label>
-                    <input type="text" name="complaints[]" class="form-control" value="{{ old('complaints.0', $complaints[0] ?? '') }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Complaint 2</label>
-                    <input type="text" name="complaints[]" class="form-control" value="{{ old('complaints.1', $complaints[1] ?? '') }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Complaint 3</label>
-                    <input type="text" name="complaints[]" class="form-control" value="{{ old('complaints.2', $complaints[2] ?? '') }}">
-                </div>
+                @for($i = 0; $i < 3; $i++)
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Complaint {{ $i + 1 }}</label>
+                        <input type="text" name="complaints[]" class="form-control" value="{{ old('complaints.'.$i, $assessment->complaints[$i]->complaint_text ?? '') }}">
+                    </div>
+                @endfor
             </div>
         </div>
 
@@ -307,7 +223,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label small fw-bold">Quality</label>
-                                    <input type="text" name="pains[{{ $label }}][quality]" class="form-control form-control-sm" value="{{ old('pains.'.$label.'.quality', $pain->quality ?? '') }}">
+                                    <input type="text" name="pains[{{ $label }}][quality]" class="form-control form-control-sm" placeholder="e.g. Sharp, Dull, Burning" value="{{ old('pains.'.$label.'.quality', $pain->quality ?? '') }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Provoking Factors</label>
@@ -345,18 +261,19 @@
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('patients.show', $patient) }}" class="btn btn-outline-secondary">Cancel</a>
+                    <a href="{{ route('patients.show', $assessment->patient) }}" class="btn btn-outline-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary btn-lg px-5">Update Assessment</button>
                 </div>
             </div>
         </div>
     </form>
-</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const slider = document.getElementById('distress_meter');
         const output = document.getElementById('distress_value');
+        
+        output.textContent = slider.value;
         
         slider.oninput = function() {
             output.textContent = this.value;

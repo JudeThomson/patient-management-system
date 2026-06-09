@@ -58,64 +58,44 @@
                         <div class="card-header bg-white py-3">
                             <h5 class="mb-0 text-primary"><i class="fas fa-history me-2"></i>Medical History</h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             @if($assessment->medicalHistory)
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label class="small text-muted d-block">Problem Started On</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->problem_started_on ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="small text-muted d-block">Doctor / Hospital</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->doctor_hospital ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="small text-muted d-block">Diagnosed At</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->diagnosed_at ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="small text-muted d-block">Details of Illness / Complaints</label>
-                                        <p class="mb-0 bg-light p-3 rounded-3">{{ $assessment->medicalHistory->illness_details ?? 'N/A' }}</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small text-muted d-block">Surgery</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->surgery ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small text-muted d-block">Radiation</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->radiation ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small text-muted d-block">Chemotherapy</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->chemotherapy ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small text-muted d-block">Colostomy</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->colostomy ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small text-muted d-block">Renal Problems</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->renal_problems ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="small text-muted d-block">DM</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->dm ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="small text-muted d-block">HTN</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->htn ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="small text-muted d-block">Asthma</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->asthma ?? 'N/A' }}</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small text-muted d-block">CAD</label>
-                                        <span class="fw-bold">{{ $assessment->medicalHistory->cad ?? 'N/A' }}</span>
-                                    </div>
-                                </div>
+                                <table class="table table-bordered mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Past Medical History</th>
+                                            <th>Details</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $historyItems = [
+                                                'problem_started_on' => ['label' => 'Problem Started On', 'details' => 'problem_started_on', 'date' => 'problem_started_on_date'],
+                                                'illness_details' => ['label' => 'Details of Illness / Complaints', 'details' => 'illness_details', 'date' => 'illness_details_date'],
+                                                'doctor_hospital' => ['label' => 'Doctor / Hospital I', 'details' => 'doctor_hospital', 'date' => 'doctor_hospital_date'],
+                                                'doctor_hospital_2' => ['label' => 'Doctor / Hospital II', 'details' => 'doctor_hospital_2', 'date' => 'doctor_hospital_2_date'],
+                                                'doctor_hospital_3' => ['label' => 'Doctor / Hospital III', 'details' => 'doctor_hospital_3', 'date' => 'doctor_hospital_3_date'],
+                                                'diagnosed_at' => ['label' => 'Diagnosed At', 'details' => 'diagnosed_at', 'date' => 'diagnosed_at_date'],
+                                                'surgery' => ['label' => 'Surgery', 'details' => 'surgery', 'date' => 'surgery_date'],
+                                                'radiation' => ['label' => 'Radiation', 'details' => 'radiation', 'date' => 'radiation_date'],
+                                                'chemotherapy' => ['label' => 'Chemotherapy', 'details' => 'chemotherapy', 'date' => 'chemotherapy_date'],
+                                                'colostomy' => ['label' => 'Colostomy', 'details' => 'colostomy', 'date' => 'colostomy_date'],
+                                                'renal_problems' => ['label' => 'Renal Problems', 'details' => 'renal_problems', 'date' => 'renal_problems_date'],
+                                                'dm_htn_asthma_cad' => ['label' => 'DM HTN Asthma CAD', 'details' => 'dm_htn_asthma_cad_details', 'date' => 'dm_htn_asthma_cad_date']
+                                            ];
+                                        @endphp
+                                        @foreach($historyItems as $key => $item)
+                                            <tr>
+                                                <td class="fw-bold">{{ $item['label'] }}</td>
+                                                <td>{{ $assessment->medicalHistory->{$item['details']} ?? 'N/A' }}</td>
+                                                <td>{{ $assessment->medicalHistory->{$item['date']} ?? 'N/A' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             @else
-                                <p class="text-muted mb-0">No medical history recorded.</p>
+                                <p class="text-muted p-3 mb-0">No medical history recorded.</p>
                             @endif
                         </div>
                     </div>
