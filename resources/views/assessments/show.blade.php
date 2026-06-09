@@ -1,0 +1,264 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ route('patients.index') }}">Patients</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('patients.show', $assessment->patient) }}">{{ $assessment->patient->patient_id }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">View Assessment</li>
+                </ol>
+            </nav>
+            <div class="btn-group">
+                <a href="{{ route('assessments.edit', $assessment) }}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="{{ route('patients.show', $assessment->patient) }}" class="btn btn-outline-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Assessment Header -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-primary">Assessment Details - {{ $assessment->assessment_id }}</h5>
+                    <span class="badge {{ $assessment->status == 'Completed' ? 'bg-success' : 'bg-warning' }} px-3 py-2">
+                        {{ $assessment->status }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="small text-muted d-block">Date</label>
+                            <span class="fw-bold">{{ \Carbon\Carbon::parse($assessment->assessment_date)->format('d M, Y') }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small text-muted d-block">Centre</label>
+                            <span class="fw-bold">{{ $assessment->centre }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small text-muted d-block">Created By</label>
+                            <span class="fw-bold">{{ $assessment->user->name }}</span>
+                        </div>
+                        <div class="col-md-3 text-center">
+...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Medical History -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 text-primary"><i class="fas fa-history me-2"></i>Medical History</h5>
+                        </div>
+                        <div class="card-body">
+                            @if($assessment->medicalHistory)
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="small text-muted d-block">Problem Started On</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->problem_started_on ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small text-muted d-block">Doctor / Hospital</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->doctor_hospital ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small text-muted d-block">Diagnosed At</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->diagnosed_at ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="small text-muted d-block">Details of Illness / Complaints</label>
+                                        <p class="mb-0 bg-light p-3 rounded-3">{{ $assessment->medicalHistory->illness_details ?? 'N/A' }}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small text-muted d-block">Surgery</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->surgery ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small text-muted d-block">Radiation</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->radiation ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small text-muted d-block">Chemotherapy</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->chemotherapy ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small text-muted d-block">Colostomy</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->colostomy ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small text-muted d-block">Renal Problems</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->renal_problems ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="small text-muted d-block">DM</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->dm ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="small text-muted d-block">HTN</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->htn ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="small text-muted d-block">Asthma</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->asthma ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small text-muted d-block">CAD</label>
+                                        <span class="fw-bold">{{ $assessment->medicalHistory->cad ?? 'N/A' }}</span>
+                                    </div>
+                                </div>
+                            @else
+                                <p class="text-muted mb-0">No medical history recorded.</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Recent Medication -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 text-primary"><i class="fas fa-pills me-2"></i>Recent Medication</h5>
+                        </div>
+                        <div class="card-body">
+                            @if($assessment->medication)
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="small text-muted d-block">Diabetes Medicine</label>
+                                        <p class="mb-0 bg-light p-2 rounded-2">{{ $assessment->medication->diabetes_medicine ?? 'None' }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small text-muted d-block">BP Medicine</label>
+                                        <p class="mb-0 bg-light p-2 rounded-2">{{ $assessment->medication->bp_medicine ?? 'None' }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small text-muted d-block">Chemo Medicine</label>
+                                        <p class="mb-0 bg-light p-2 rounded-2">{{ $assessment->medication->chemo_medicine ?? 'None' }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small text-muted d-block">Pain Medicine</label>
+                                        <p class="mb-0 bg-light p-2 rounded-2">{{ $assessment->medication->pain_medicine ?? 'None' }}</p>
+                                    </div>
+                                </div>
+                            @else
+                                <p class="text-muted mb-0">No medication recorded.</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Symptoms -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0">Symptoms Reported</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-2">
+                                @forelse($assessment->symptoms as $symptom)
+                                    <span class="badge bg-info-subtle text-info px-3 py-2">{{ $symptom->symptom_name }}</span>
+                                @empty
+                                    <p class="text-muted mb-0">No symptoms reported.</p>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Complaints -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0">Presenting Complaints</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                @forelse($assessment->complaints as $complaint)
+                                    <li class="list-group-item px-0">{{ $complaint->complaint_text }}</li>
+                                @empty
+                                    <li class="list-group-item px-0 text-muted">No complaints recorded.</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- Pain Summary -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0">Pain Assessment Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="painAccordion">
+                                @foreach(['A', 'B', 'C', 'D'] as $label)
+                                    @php $pain = $assessment->pains->where('pain_label', $label)->first(); @endphp
+                                    <div class="accordion-item border-0 mb-2 shadow-sm">
+                                        <h2 class="accordion-header" id="heading{{ $label }}">
+                                            <button class="accordion-button collapsed rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $label }}" aria-expanded="false">
+                                                <span class="fw-bold me-3">Pain {{ $label }}</span>
+                                                @if($pain && $pain->pain_score !== null)
+                                                    <span class="badge bg-primary">Score: {{ $pain->pain_score }}</span>
+                                                @else
+                                                    <span class="text-muted small">Not recorded</span>
+                                                @endif
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{ $label }}" class="accordion-collapse collapse" data-bs-parent="#painAccordion">
+                                            <div class="accordion-body bg-light rounded-bottom-3">
+                                                @if($pain)
+                                                    <div class="row g-3">
+                                                        <div class="col-6">
+                                                            <small class="text-muted d-block">Duration</small>
+                                                            <span>{{ $pain->duration ?? 'N/A' }}</span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <small class="text-muted d-block">Frequency</small>
+                                                            <span>{{ $pain->continuous_intermittent ?? 'N/A' }}</span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <small class="text-muted d-block">Radiation</small>
+                                                            <span>{{ $pain->radiation ?? 'N/A' }}</span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <small class="text-muted d-block">Quality</small>
+                                                            <span>{{ $pain->quality ?? 'N/A' }}</span>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <small class="text-muted d-block">Provoking Factors</small>
+                                                            <p class="mb-0 small">{{ $pain->provoking_factors ?? 'N/A' }}</p>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <small class="text-muted d-block">Palliating Factors</small>
+                                                            <p class="mb-0 small">{{ $pain->palliating_factors ?? 'N/A' }}</p>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <small class="text-muted d-block">Impact on ADLs</small>
+                                                            <p class="mb-0 small">{{ $pain->impact_on_adls ?? 'N/A' }}</p>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <small class="text-muted d-block">Impact on Person</small>
+                                                            <p class="mb-0 small">{{ $pain->impact_on_person ?? 'N/A' }}</p>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <p class="text-muted mb-0">No data for this pain type.</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
