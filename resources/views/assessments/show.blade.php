@@ -169,10 +169,15 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <!-- Pain Summary -->
+                    <!-- Pain Assessment Summary -->
                     <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-header bg-white py-3">
+                        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Pain Assessment Summary</h5>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ route('assessments.pdf', $assessment) }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-download"></i> Download PDF
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="accordion" id="painAccordion">

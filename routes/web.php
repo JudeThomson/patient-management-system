@@ -27,3 +27,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/assessments/{assessment}/pdf', [\App\Http\Controllers\AssessmentController::class, 'exportPdf'])->middleware('auth')->name('assessments.pdf');

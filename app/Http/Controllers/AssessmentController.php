@@ -70,6 +70,13 @@ class AssessmentController extends Controller
         return view('assessments.show', compact('assessment'));
     }
 
+    public function exportPdf(Assessment $assessment)
+    {
+        $assessment->load(['patient', 'symptoms', 'complaints', 'pains', 'medicalHistory', 'medication']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('assessments.pdf', compact('assessment'));
+        return $pdf->stream('assessment_'.$assessment->assessment_id.'.pdf');
+    }
+
     public function edit(Assessment $assessment)
     {
         $assessment->load(['patient', 'symptoms', 'complaints', 'pains', 'medicalHistory', 'medication']);
