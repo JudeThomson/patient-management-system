@@ -74,6 +74,10 @@
                                 <label class="form-label">Address</label>
                                 <textarea name="address" class="form-control" rows="2">{{ old('address', $patient->address) }}</textarea>
                             </div>
+                            <div class="col-12">
+                                <label class="form-label">Route Map</label>
+                                <textarea name="route_map" class="form-control" rows="2">{{ old('route_map', $patient->route_map) }}</textarea>
+                            </div>
                             <div class="col-md-4">
                                 <label class="form-label">Pincode</label>
                                 <input type="text" name="pincode" class="form-control" value="{{ old('pincode', $patient->pincode) }}">

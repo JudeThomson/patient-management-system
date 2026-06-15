@@ -29,6 +29,7 @@ class UpdatePatientRequest extends FormRequest
             'phone' => 'required|string|max:20',
             'diagnosis' => 'nullable|string',
             'address' => 'nullable|string',
+            'route_map' => 'nullable|string',
             'pincode' => 'nullable|string|max:10',
             'referred_by' => 'nullable|string|max:255',
             'hospital_department' => 'nullable|string|max:255',

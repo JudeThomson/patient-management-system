@@ -19,6 +19,7 @@ class Patient extends Model
         'phone',
         'diagnosis',
         'address',
+        'route_map',
         'pincode',
         'referred_by',
         'hospital_department',

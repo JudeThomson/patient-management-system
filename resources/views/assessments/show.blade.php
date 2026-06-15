@@ -174,7 +174,7 @@
                         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Pain Assessment Summary</h5>
                             <div class="btn-group btn-group-sm">
-                                <a href="{{ route('assessments.pdf', $assessment) }}" class="btn btn-outline-secondary">
+                                <a href="{{ route('assessments.pdf', $assessment) }}" target="_blank" class="btn btn-outline-secondary">
                                     <i class="fas fa-download"></i> Download PDF
                                 </a>
                             </div>

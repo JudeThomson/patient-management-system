@@ -46,6 +46,7 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
+
         DB::transaction(function() use ($request) {
             $patient = Patient::create($request->validated());
 

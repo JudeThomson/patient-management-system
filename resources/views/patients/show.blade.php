@@ -33,9 +33,9 @@
             <!-- Patient Profile Card -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body text-center py-4">
-                    <div class="bg-primary-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                    {{-- <div class="bg-primary-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
                         <i class="fas fa-user-injured text-primary fa-3x"></i>
-                    </div>
+                    </div> --}}
                     <h4 class="mb-1">{{ $patient->name }}</h4>
                     <p class="text-muted mb-3">{{ $patient->patient_id }}</p>
                     <div class="d-flex justify-content-center gap-2">
@@ -108,6 +108,10 @@
                             <label class="small text-muted d-block mb-1">Address</label>
                             <p class="mb-0">{{ $patient->address ?? 'No address recorded.' }}</p>
                         </div>
+                        <div class="col-md-12">
+                            <label class="small text-muted d-block mb-1">Route Map</label>
+                            <p class="mb-0">{{ $patient->route_map ?? 'No route map recorded.' }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,10 +148,10 @@
                                         <td class="text-end pe-4">
                                             <div class="btn-group">
                                                 <a href="{{ route('assessments.show', $assessment) }}" class="btn btn-sm btn-outline-info" title="View">
-                                                    <i class="fas fa-eye"></i>
+                                                    <i class="fas fa-eye">View</i>
                                                 </a>
                                                 <a href="{{ route('assessments.edit', $assessment) }}" class="btn btn-sm btn-outline-primary" title="Edit">
-                                                    <i class="fas fa-edit"></i>
+                                                    <i class="fas fa-edit">Edit</i>
                                                 </a>
                                             </div>
                                         </td>

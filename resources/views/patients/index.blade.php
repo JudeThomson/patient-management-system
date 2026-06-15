@@ -56,13 +56,13 @@
                                 <td class="text-end pe-4">
                                     <div class="btn-group">
                                         <a href="{{ route('patients.show', $patient) }}" class="btn btn-sm btn-outline-info" title="View">
-                                            <i class="fas fa-eye"></i>
+                                            <i class="fas fa-eye">View</i>
                                         </a>
                                         <a href="{{ route('patients.edit', $patient) }}" class="btn btn-sm btn-outline-primary" title="Edit">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-edit">Edit</i>
                                         </a>
                                         <button type="button" class="btn btn-sm btn-outline-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $patient->id }}">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="fas fa-trash">Delete</i>
                                         </button>
                                     </div>
 

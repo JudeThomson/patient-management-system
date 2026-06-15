@@ -22,13 +22,14 @@ class StorePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|min:3|max:50',
             'sct_no' => 'nullable|string|max:255',
             'age' => 'required|integer|min:0',
             'gender' => 'required|string|in:Male,Female,Other',
             'phone' => 'required|string|max:20',
             'diagnosis' => 'nullable|string',
             'address' => 'nullable|string',
+            'route_map' => 'nullable|string',
             'pincode' => 'nullable|string|max:10',
             'referred_by' => 'nullable|string|max:255',
             'hospital_department' => 'nullable|string|max:255',
