@@ -15,6 +15,67 @@
     <!-- Styles -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const validationRules = {
+                'name': (val) => val.length >= 3 && /^[a-zA-Z\s]+$/.test(val),
+                'caregivers.*.name': (val) => val.length >= 3 && /^[a-zA-Z\s]+$/.test(val),
+                'age': (val) => {
+                    const n = parseInt(val);
+                    return !isNaN(n) && n >= 1 && n <= 100 && /^\d+$/.test(val);
+                },
+                'phone': (val) => /^\d{10}$/.test(val),
+                'caregivers.*.contact_no': (val) => /^\d{10}$/.test(val),
+                'address': (val) => val.length >= 5 && val.length <= 500,
+                'caregivers.*.relation': (val) => val.length >= 2 && val.length <= 50 && /^[a-zA-Z\s]+$/.test(val),
+                'sct_no': (val) => val.length <= 15,
+                'gender': (val) => ['Male', 'Female', 'Other'].includes(val),
+                'diagnosis': (val) => !val || (val.length >= 3 && val.length <= 255),
+                'hospital_department': (val) => !val || (val.length >= 3 && val.length <= 50),
+                'route_map': (val) => !val || (val.length >= 3 && val.length <= 500)
+            };
+
+            function getRuleKey(name) {
+                if (!name) return null;
+                // Convert array names like caregivers[0][name] to caregivers.*.name
+                // 1. Replace the first set of brackets with .*
+                // 2. Replace subsequent bracketed strings with .[string]
+                return name.replace(/\[\d+\]/g, '.*').replace(/\[([^\]]+)\]/g, '.$1');
+            }
+
+            function clearErrorIfValid(input) {
+                if (!input.classList.contains('is-invalid')) return;
+
+                const name = input.getAttribute('name');
+                const ruleKey = getRuleKey(name);
+                const rule = validationRules[ruleKey];
+
+                if (rule && rule(input.value)) {
+                    input.classList.remove('is-invalid');
+                    // Find the sibling error message and hide it
+                    const parent = input.closest('div');
+                    const errorContainer = parent ? parent.querySelector('.invalid-feedback') : null;
+                    if (errorContainer) {
+                        errorContainer.classList.remove('d-block');
+                        errorContainer.classList.add('d-none');
+                    }
+                }
+            }
+
+            document.addEventListener('input', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    clearErrorIfValid(e.target);
+                }
+            });
+
+            document.addEventListener('change', function(e) {
+                if (e.target.tagName === 'SELECT') {
+                    clearErrorIfValid(e.target);
+                }
+            });
+        });
+    </script>
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;

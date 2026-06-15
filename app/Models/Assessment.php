@@ -15,7 +15,6 @@ class Assessment extends Model
         'assessment_id',
         'patient_id',
         'assessment_date',
-        'centre',
         'distress_meter',
         'status',
         'created_by',

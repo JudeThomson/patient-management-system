@@ -51,11 +51,12 @@
         </div>
         <div class="summary-grid">
             <div class="summary-col"><strong>3. Address with Pincode:</strong> {{ $assessment->patient->address ?? '' }} {{ $assessment->patient->pincode ?? '' }}</div>
+            <div class="summary-col"><strong>4. Phone No:</strong> {{ $assessment->patient->phone ?? '' }}</div>
         </div>
     </div>
 
     <div class="section">
-        <h3>4. Care Giver(s) Details</h3>
+        <h3>5. Care Giver(s) Details</h3>
         @if($assessment->patient->caregivers->count() > 0)
             <table class="table">
                 <thead>
@@ -79,19 +80,14 @@
             <p>No caregiver information available.</p>
         @endif
     </div>
+    
     <div class="section">
         <div class="summary-grid">
-            <div class="summary-col"><strong>No:</strong> {{ $assessment->patient->phone ?? '' }}</div>
-            <div class="summary-col"><strong>Center:</strong> {{ $assessment->centre ?? '' }}</div>
+            <div class="summary-col"><strong>6. Route Map: </strong> {{ $assessment->patient->route_map ?? '' }} </div>
         </div>
     </div>
     <div class="section">
-        <div class="summary-grid">
-            <div class="summary-col"><strong>5. Route Map: </strong> {{ $assessment->patient->route_map ?? '' }} </div>
-        </div>
-    </div>
-    <div class="section">
-        <h3>6. Symptoms</h3>
+        <h3>7. Symptoms</h3>
         @if($assessment->symptoms->count() > 0)
             @foreach($assessment->symptoms as $symptom)
                 <span class="badge">{{ $symptom->symptom_name }}</span>
@@ -102,12 +98,12 @@
     </div>
 
     <div class="section">
-        <h3>7. Distress Meter</h3>
+        <h3>8. Distress Meter</h3>
         <p>Distress Score: {{ $assessment->distress_meter }} / 10</p>
     </div>
 
     <div class="section">
-        <h3>8. Presenting Complaints</h3>
+        <h3>9. Presenting Complaints</h3>
         <ul>
             @foreach($assessment->complaints as $complaint)
                 <li>{{ $complaint->complaint_text }}</li>
@@ -116,7 +112,7 @@
     </div>
 
     <div class="section">
-        <h3>9. Body Map: </h3>
+        <h3>10. Body Map: </h3>
         <div class="summary-grid">
             <div class="summary-col"> I HAVE NO IDEA HOW TO DO BODY PAIN MARKING SECTION!!!! </div>
         </div>
@@ -124,7 +120,7 @@
 
     @if($assessment->pains->count() > 0)
     <div class="section">
-        <h3>10. Pain Evaluation</h3>
+        <h3>11. Pain Evaluation</h3>
         @foreach($assessment->pains as $pain)
             @if(!empty($pain->pain_score) || !empty($pain->quality))
             <div class="pain-card">
@@ -142,7 +138,7 @@
     @endif
 
     <div class="section">
-        <h3>11. Medical History</h3>
+        <h3>12. Medical History</h3>
         <table class="table">
             <thead><tr><th>Item</th><th>Details</th><th>Date</th></tr></thead>
             <tbody>
@@ -171,7 +167,7 @@
     </div>
 
     <div class="section">
-        <h3>12. Recent Medication</h3>
+        <h3>13. Recent Medication</h3>
         <table class="table">
             <tr><th>Medicine</th><th>Details</th></tr>
             <tr><td>Diabetes</td><td>{{ $assessment->medication->diabetes_medicine ?? 'N/A' }}</td></tr>

@@ -22,8 +22,7 @@ class StoreAssessmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'assessment_date' => 'required|date',
-            'centre' => 'required|string|max:255',
+            'assessment_date' => 'required|date|before_or_equal:today',
             'distress_meter' => 'required|integer|min:0|max:10',
             'status' => 'required|string|in:Draft,Completed',
             'symptoms' => 'nullable|array',
@@ -42,12 +41,20 @@ class StoreAssessmentRequest extends FormRequest
             'pains.*.impact_on_person' => 'nullable|string',
             'medical_history' => 'nullable|array',
             'medical_history.*.details' => 'nullable|string',
-            'medical_history.*.date' => 'nullable|date',
+            'medical_history.*.date' => 'nullable|date|before_or_equal:today',
             'medication' => 'nullable|array',
             'medication.diabetes_medicine' => 'nullable|string',
             'medication.bp_medicine' => 'nullable|string',
             'medication.chemo_medicine' => 'nullable|string',
             'medication.pain_medicine' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'assessment_date.before_or_equal' => 'The date cannot be in the future.',
+            'medical_history.*.date.before_or_equal' => 'The date cannot be in the future.',
         ];
     }
 }

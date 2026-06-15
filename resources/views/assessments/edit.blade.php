@@ -15,16 +15,6 @@
         </div>
     </div>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('assessments.update', $assessment) }}" method="POST">
         @csrf
         @method('PUT')
@@ -36,13 +26,10 @@
             </div>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="form-label fw-bold">Assessment Date <span class="text-danger">*</span></label>
-                        <input type="date" name="assessment_date" class="form-control" value="{{ old('assessment_date', $assessment->assessment_date) }}" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Centre <span class="text-danger">*</span></label>
-                        <input type="text" name="centre" class="form-control" value="{{ old('centre', $assessment->centre) }}" placeholder="e.g. Main Hospital, Clinic A" required>
+                        <input type="date" name="assessment_date" class="form-control @error('assessment_date') is-invalid @enderror" value="{{ old('assessment_date', $assessment->assessment_date) }}" max="{{ date('Y-m-d') }}">
+                        <x-input-error :messages="$errors->get('assessment_date')" class="mt-2" />
                     </div>
                 </div>
             </div>
@@ -84,10 +71,12 @@
                             <tr>
                                 <td class="fw-bold">{{ $label }}</td>
                                 <td>
-                                    <input type="text" name="medical_history[{{ $key }}][details]" class="form-control" value="{{ old('medical_history.'.$key.'.details', $assessment->medicalHistory?->{$key.'_details'} ?? '') }}">
+                                    <input type="text" name="medical_history[{{ $key }}][details]" class="form-control @error('medical_history.'.$key.'.details') is-invalid @enderror" value="{{ old('medical_history.'.$key.'.details', $assessment->medicalHistory?->{$key.'_details'} ?? '') }}">
+                                    <x-input-error :messages="$errors->get('medical_history.'.$key.'.details')" class="mt-1" />
                                 </td>
                                 <td>
-                                    <input type="date" name="medical_history[{{ $key }}][date]" class="form-control" value="{{ old('medical_history.'.$key.'.date', $assessment->medicalHistory?->{$key.'_date'} ?? '') }}">
+                                    <input type="date" name="medical_history[{{ $key }}][date]" class="form-control @error('medical_history.'.$key.'.date') is-invalid @enderror" value="{{ old('medical_history.'.$key.'.date', $assessment->medicalHistory?->{$key.'_date'} ?? '') }}" max="{{ date('Y-m-d') }}">
+                                    <x-input-error :messages="$errors->get('medical_history.'.$key.'.date')" class="mt-1" />
                                 </td>
                             </tr>
                             @endforeach
@@ -106,19 +95,23 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Diabetes Medicine</label>
-                        <textarea name="medication[diabetes_medicine]" class="form-control" rows="2">{{ old('medication.diabetes_medicine', $assessment->medication?->diabetes_medicine ?? '') }}</textarea>
+                        <textarea name="medication[diabetes_medicine]" class="form-control @error('medication.diabetes_medicine') is-invalid @enderror" rows="2">{{ old('medication.diabetes_medicine', $assessment->medication?->diabetes_medicine ?? '') }}</textarea>
+                        <x-input-error :messages="$errors->get('medication.diabetes_medicine')" class="mt-2" />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">BP Medicine</label>
-                        <textarea name="medication[bp_medicine]" class="form-control" rows="2">{{ old('medication.bp_medicine', $assessment->medication?->bp_medicine ?? '') }}</textarea>
+                        <textarea name="medication[bp_medicine]" class="form-control @error('medication.bp_medicine') is-invalid @enderror" rows="2">{{ old('medication.bp_medicine', $assessment->medication?->bp_medicine ?? '') }}</textarea>
+                        <x-input-error :messages="$errors->get('medication.bp_medicine')" class="mt-2" />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Chemo Medicine</label>
-                        <textarea name="medication[chemo_medicine]" class="form-control" rows="2">{{ old('medication.chemo_medicine', $assessment->medication?->chemo_medicine ?? '') }}</textarea>
+                        <textarea name="medication[chemo_medicine]" class="form-control @error('medication.chemo_medicine') is-invalid @enderror" rows="2">{{ old('medication.chemo_medicine', $assessment->medication?->chemo_medicine ?? '') }}</textarea>
+                        <x-input-error :messages="$errors->get('medication.chemo_medicine')" class="mt-2" />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Pain Medicine</label>
-                        <textarea name="medication[pain_medicine]" class="form-control" rows="2">{{ old('medication.pain_medicine', $assessment->medication?->pain_medicine ?? '') }}</textarea>
+                        <textarea name="medication[pain_medicine]" class="form-control @error('medication.pain_medicine') is-invalid @enderror" rows="2">{{ old('medication.pain_medicine', $assessment->medication?->pain_medicine ?? '') }}</textarea>
+                        <x-input-error :messages="$errors->get('medication.pain_medicine')" class="mt-2" />
                     </div>
                 </div>
             </div>
@@ -130,6 +123,7 @@
                 <h5 class="mb-0 text-primary"><i class="fas fa-notes-medical me-2"></i>Symptoms Check</h5>
             </div>
             <div class="card-body">
+                <x-input-error :messages="$errors->get('symptoms')" class="mb-3" />
                 <div class="row">
                     @php
                         $symptoms = [
@@ -163,6 +157,7 @@
                     <div class="col-md-8 text-center">
                         <label for="distress_meter" class="form-label fw-bold mb-3">Distress Level: <span id="distress_value" class="h4 text-danger">{{ old('distress_meter', $assessment->distress_meter) }}</span> / 10</label>
                         <input type="range" class="form-range" min="0" max="10" step="1" name="distress_meter" id="distress_meter" value="{{ old('distress_meter', $assessment->distress_meter) }}">
+                        <x-input-error :messages="$errors->get('distress_meter')" class="mt-2" />
                         <div class="d-flex justify-content-between px-2 text-muted small">
                             <span>No Distress (0)</span>
                             <span>Moderate (5)</span>
@@ -179,10 +174,12 @@
                 <h5 class="mb-0 text-primary"><i class="fas fa-comment-medical me-2"></i>Presenting Complaints</h5>
             </div>
             <div class="card-body">
+                <x-input-error :messages="$errors->get('complaints')" class="mb-3" />
                 @for($i = 0; $i < 3; $i++)
                     <div class="mb-3">
                         <label class="form-label fw-bold">Complaint {{ $i + 1 }}</label>
-                        <input type="text" name="complaints[]" class="form-control" value="{{ old('complaints.'.$i, $assessment->complaints[$i]->complaint_text ?? '') }}">
+                        <input type="text" name="complaints[]" class="form-control @error('complaints.'.$i) is-invalid @enderror" value="{{ old('complaints.'.$i, $assessment->complaints[$i]->complaint_text ?? '') }}">
+                        <x-input-error :messages="$errors->get('complaints.'.$i)" class="mt-2" />
                     </div>
                 @endfor
             </div>
@@ -203,43 +200,52 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Duration</label>
-                                    <input type="text" name="pains[{{ $label }}][duration]" class="form-control form-control-sm" value="{{ old('pains.'.$label.'.duration', $pain->duration ?? '') }}">
+                                    <input type="text" name="pains[{{ $label }}][duration]" class="form-control form-control-sm @error('pains.'.$label.'.duration') is-invalid @enderror" value="{{ old('pains.'.$label.'.duration', $pain->duration ?? '') }}">
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.duration')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Frequency</label>
-                                    <select name="pains[{{ $label }}][continuous_intermittent]" class="form-select form-select-sm">
+                                    <select name="pains[{{ $label }}][continuous_intermittent]" class="form-select form-select-sm @error('pains.'.$label.'.continuous_intermittent') is-invalid @enderror">
                                         <option value="">Select...</option>
                                         <option value="Continuous" {{ old('pains.'.$label.'.continuous_intermittent', $pain->continuous_intermittent ?? '') == 'Continuous' ? 'selected' : '' }}>Continuous</option>
                                         <option value="Intermittent" {{ old('pains.'.$label.'.continuous_intermittent', $pain->continuous_intermittent ?? '') == 'Intermittent' ? 'selected' : '' }}>Intermittent</option>
                                     </select>
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.continuous_intermittent')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Pain Score (0-10)</label>
-                                    <input type="number" name="pains[{{ $label }}][pain_score]" class="form-control form-control-sm" min="0" max="10" value="{{ old('pains.'.$label.'.pain_score', $pain->pain_score ?? '') }}">
+                                    <input type="number" name="pains[{{ $label }}][pain_score]" class="form-control form-control-sm @error('pains.'.$label.'.pain_score') is-invalid @enderror" min="0" max="10" value="{{ old('pains.'.$label.'.pain_score', $pain->pain_score ?? '') }}">
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.pain_score')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Radiation</label>
-                                    <input type="text" name="pains[{{ $label }}][radiation]" class="form-control form-control-sm" value="{{ old('pains.'.$label.'.radiation', $pain->radiation ?? '') }}">
+                                    <input type="text" name="pains[{{ $label }}][radiation]" class="form-control form-control-sm @error('pains.'.$label.'.radiation') is-invalid @enderror" value="{{ old('pains.'.$label.'.radiation', $pain->radiation ?? '') }}">
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.radiation')" class="mt-1" />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label small fw-bold">Quality</label>
-                                    <input type="text" name="pains[{{ $label }}][quality]" class="form-control form-control-sm" placeholder="e.g. Sharp, Dull, Burning" value="{{ old('pains.'.$label.'.quality', $pain->quality ?? '') }}">
+                                    <input type="text" name="pains[{{ $label }}][quality]" class="form-control form-control-sm @error('pains.'.$label.'.quality') is-invalid @enderror" placeholder="e.g. Sharp, Dull, Burning" value="{{ old('pains.'.$label.'.quality', $pain->quality ?? '') }}">
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.quality')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Provoking Factors</label>
-                                    <textarea name="pains[{{ $label }}][provoking_factors]" class="form-control form-control-sm" rows="2">{{ old('pains.'.$label.'.provoking_factors', $pain->provoking_factors ?? '') }}</textarea>
+                                    <textarea name="pains[{{ $label }}][provoking_factors]" class="form-control form-control-sm @error('pains.'.$label.'.provoking_factors') is-invalid @enderror" rows="2">{{ old('pains.'.$label.'.provoking_factors', $pain->provoking_factors ?? '') }}</textarea>
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.provoking_factors')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Palliating Factors</label>
-                                    <textarea name="pains[{{ $label }}][palliating_factors]" class="form-control form-control-sm" rows="2">{{ old('pains.'.$label.'.palliating_factors', $pain->palliating_factors ?? '') }}</textarea>
+                                    <textarea name="pains[{{ $label }}][palliating_factors]" class="form-control form-control-sm @error('pains.'.$label.'.palliating_factors') is-invalid @enderror" rows="2">{{ old('pains.'.$label.'.palliating_factors', $pain->palliating_factors ?? '') }}</textarea>
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.palliating_factors')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Impact on ADLs</label>
-                                    <textarea name="pains[{{ $label }}][impact_on_adls]" class="form-control form-control-sm" rows="2">{{ old('pains.'.$label.'.impact_on_adls', $pain->impact_on_adls ?? '') }}</textarea>
+                                    <textarea name="pains[{{ $label }}][impact_on_adls]" class="form-control form-control-sm @error('pains.'.$label.'.impact_on_adls') is-invalid @enderror" rows="2">{{ old('pains.'.$label.'.impact_on_adls', $pain->impact_on_adls ?? '') }}</textarea>
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.impact_on_adls')" class="mt-1" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-bold">Impact on Person</label>
-                                    <textarea name="pains[{{ $label }}][impact_on_person]" class="form-control form-control-sm" rows="2">{{ old('pains.'.$label.'.impact_on_person', $pain->impact_on_person ?? '') }}</textarea>
+                                    <textarea name="pains[{{ $label }}][impact_on_person]" class="form-control form-control-sm @error('pains.'.$label.'.impact_on_person') is-invalid @enderror" rows="2">{{ old('pains.'.$label.'.impact_on_person', $pain->impact_on_person ?? '') }}</textarea>
+                                    <x-input-error :messages="$errors->get('pains.'.$label.'.impact_on_person')" class="mt-1" />
                                 </div>
                             </div>
                         </div>
@@ -260,6 +266,7 @@
                         <label class="form-check-label fw-bold" for="statusCompleted">Mark as Completed</label>
                     </div>
                 </div>
+                <x-input-error :messages="$errors->get('status')" class="ms-3" />
                 <div class="d-flex gap-2">
                     <a href="{{ route('patients.show', $assessment->patient) }}" class="btn btn-outline-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary btn-lg px-5">Update Assessment</button>

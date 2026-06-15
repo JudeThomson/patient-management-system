@@ -32,20 +32,19 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <label class="small text-muted d-block">Date</label>
+                        <div class="col-md-4">
+                            <label class="small text-muted d-block text-uppercase fw-bold">Assessment Date</label>
                             <span class="fw-bold">{{ \Carbon\Carbon::parse($assessment->assessment_date)->format('d M, Y') }}</span>
                         </div>
-                        <div class="col-md-3">
-                            <label class="small text-muted d-block">Centre</label>
-                            <span class="fw-bold">{{ $assessment->centre }}</span>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="small text-muted d-block">Created By</label>
+                        <div class="col-md-4">
+                            <label class="small text-muted d-block text-uppercase fw-bold">Created By</label>
                             <span class="fw-bold">{{ $assessment->user->name }}</span>
                         </div>
-                        <div class="col-md-3 text-center">
-...
+                        <div class="col-md-4">
+                            <label class="small text-muted d-block text-uppercase fw-bold">Status</label>
+                            <span class="badge {{ $assessment->status == 'Completed' ? 'bg-success' : 'bg-warning' }} px-3 py-1">
+                                {{ $assessment->status }}
+                            </span>
                         </div>
                     </div>
                 </div>

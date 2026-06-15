@@ -32,51 +32,53 @@
         <div class="col-lg-4">
             <!-- Patient Profile Card -->
             <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body text-center py-4">
-                    {{-- <div class="bg-primary-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-user-injured text-primary fa-3x"></i>
-                    </div> --}}
-                    <h4 class="mb-1">{{ $patient->name }}</h4>
-                    <p class="text-muted mb-3">{{ $patient->patient_id }}</p>
-                    <div class="d-flex justify-content-center gap-2">
-                        <span class="badge bg-info-subtle text-info px-3 py-2">{{ $patient->gender }}</span>
-                        <span class="badge bg-primary-subtle text-primary px-3 py-2">{{ $patient->age }} Years</span>
-                    </div>
-                </div>
-                <div class="card-footer bg-white border-top-0 px-4 pb-4">
+                <div class="card-body py-4">
+                    <h4 class="mb-1 text-center">{{ $patient->name }}</h4>
+                    <p class="text-center text-muted mb-3">{{ $patient->patient_id }}</p>
                     <div class="mb-3">
-                        <label class="small text-muted d-block">Phone Number</label>
-                        <span class="fw-bold">{{ $patient->phone }}</span>
+                        <label><b>Gender: </b></label>
+                        <span class="fw-bold">{{ $patient->gender ?? 'N/A' }}</span>
                     </div>
                     <div class="mb-3">
-                        <label class="small text-muted d-block">SCT Number</label>
+                        <label><b>Age: </b></label>
+                        <span class="fw-bold">{{ $patient->age ?? 'N/A' }} Years</span>
+                    </div>                    
+                    <div class="mb-3">
+                        <label><b>SCT No: </b></label>
                         <span class="fw-bold">{{ $patient->sct_no ?? 'N/A' }}</span>
                     </div>
                     <div>
-                        <label class="small text-muted d-block">Referred By</label>
+                        <label class="fw-bold"><b>Referred By: </b></label>
                         <span class="fw-bold">{{ $patient->referred_by ?? 'N/A' }}</span>
                     </div>
                 </div>
             </div>
-
+            <style>
+                label,.fw-bold {
+                    font-size: 18px;
+                }
+            </style>
             <!-- Caregivers Section -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-white py-3">
                     <h5 class="mb-0">Caregivers</h5>
                 </div>
-                <div class="card-body">
-                    @foreach($patient->caregivers as $caregiver)
-                        <div class="mb-3 pb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <h6 class="mb-0">{{ $caregiver->name }}</h6>
-                                <span class="badge bg-secondary-subtle text-secondary">{{ $caregiver->relation }}</span>
-                            </div>
-                            <small class="text-muted">
-                                <i class="fas fa-phone-alt me-1"></i> {{ $caregiver->contact_no }}
-                            </small>
-                        </div>
-                    @endforeach
+                @foreach($patient->caregivers as $caregiver)
+                <div class="card-footer bg-white border-top-0 px-4 pb-4 {{ !$loop->last ? 'border-bottom' : '' }}">
+                    <div class="mb-3">
+                        <label><b>Caregiver Name: </b></label>
+                        <span class="fw-bold">{{ $caregiver->name }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Relation: </b></label>
+                        <span class="fw-bold">{{ $caregiver->relation ?? 'N/A' }}</span>
+                    </div>
+                    <div>
+                        <label class="fw-bold"><b>Contact No: </b></label>
+                        <span class="fw-bold">{{ $caregiver->contact_no ?? 'N/A' }}</span>
+                    </div>
                 </div>
+                 @endforeach
             </div>
         </div>
 
@@ -89,27 +91,27 @@
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <label class="small text-muted d-block mb-1">Diagnosis</label>
-                            <div class="p-3 bg-light rounded-3">
+                            <label class="fw-bold d-block mb-1">Diagnosis</label>
+                            <div class="p-3 rounded-3">
                                 {{ $patient->diagnosis ?? 'No diagnosis recorded.' }}
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="small text-muted d-block mb-1">Hospital / Department</label>
-                            <span class="fw-bold">{{ $patient->hospital_department ?? 'N/A' }}</span>
+                            <label class="fw-bold d-block mb-1">Hospital / Department</label>
+                            <span class="">{{ $patient->hospital_department ?? 'N/A' }}</span>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="small text-muted d-block mb-1">Pincode</label>
-                            <span class="fw-bold">{{ $patient->pincode ?? 'N/A' }}</span>
+                            <label class="fw-bold d-block mb-1">Pincode</label>
+                            <span class="">{{ $patient->pincode ?? 'N/A' }}</span>
                         </div>
                         <div class="col-md-12">
-                            <label class="small text-muted d-block mb-1">Address</label>
+                            <label class="fw-bold d-block mb-1">Address</label>
                             <p class="mb-0">{{ $patient->address ?? 'No address recorded.' }}</p>
                         </div>
                         <div class="col-md-12">
-                            <label class="small text-muted d-block mb-1">Route Map</label>
+                            <label class="fw-bold d-block mb-1">Route Map</label>
                             <p class="mb-0">{{ $patient->route_map ?? 'No route map recorded.' }}</p>
                         </div>
                     </div>
@@ -137,7 +139,7 @@
                             <tbody>
                                 @forelse($patient->assessments as $assessment)
                                     <tr>
-                                        <td class="ps-4 fw-bold text-primary">{{ $assessment->assessment_id }}</td>
+                                        <td class="ps-4 fw-bold ">{{ $assessment->assessment_id }}</td>
                                         <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->format('d M, Y') }}</td>
                                         <td>{{ $assessment->user->name }}</td>
                                         <td>

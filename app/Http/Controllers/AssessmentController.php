@@ -26,7 +26,6 @@ class AssessmentController extends Controller
         DB::transaction(function() use ($request, $patient) {
             $assessment = $patient->assessments()->create([
                 'assessment_date' => $request->assessment_date,
-                'centre' => $request->centre,
                 'distress_meter' => $request->distress_meter,
                 'status' => $request->status,
                 'created_by' => Auth::id(),
@@ -89,7 +88,6 @@ class AssessmentController extends Controller
         DB::transaction(function() use ($request, $assessment) {
             $assessment->update([
                 'assessment_date' => $request->assessment_date,
-                'centre' => $request->centre,
                 'distress_meter' => $request->distress_meter,
                 'status' => $request->status,
             ]);
