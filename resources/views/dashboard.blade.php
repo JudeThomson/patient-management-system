@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-lg-8 mb-4 mb-lg-0">
             <div class="card h-100">
                 <div class="card-header bg-white py-3">
@@ -158,6 +158,6 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 </div>
 @endsection

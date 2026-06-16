@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AssessmentController extends Controller
 {
+    public function index()
+    {
+        $assessments = Assessment::with(['patient', 'user'])
+            ->latest()
+            ->paginate(15);
+            
+        $totalCount = Assessment::count();
+
+        return view('assessments.index', compact('assessments', 'totalCount'));
+    }
+
     public function create(Patient $patient)
     {
         $lastAssessment = $patient->assessments()
