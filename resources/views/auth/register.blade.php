@@ -11,6 +11,15 @@
             @enderror
         </div>
 
+        <!-- Username -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
+            @error('username')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
         <!-- Email Address -->
         <div class="mb-3">
             <label for="email" class="form-label">Email Address</label>
