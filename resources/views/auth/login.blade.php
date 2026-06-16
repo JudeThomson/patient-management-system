@@ -35,9 +35,15 @@
 
         <div class="text-center">
             @if (Route::has('password.request'))
-                <a class="text-decoration-none small" href="{{ route('password.request') }}">
+                <a class="text-decoration-none small d-block mb-1" href="{{ route('password.request') }}">
                     Forgot your password?
                 </a>
+            @endif
+
+            @if (Route::has('register'))
+                <div class="mt-3 small">
+                    Don't have an account? <a href="{{ route('register') }}" class="text-decoration-none fw-bold">Register</a>
+                </div>
             @endif
         </div>
     </form>
