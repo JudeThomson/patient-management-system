@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
+use App\Models\Patient;
+use App\Models\Assessment;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,7 +13,17 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $stats = [
+        'totalPatients' => Patient::count(),
+        'totalAssessments' => Assessment::count(),
+        'completedAssessments' => Assessment::where('status', 'Completed')->count(),
+        'draftAssessments' => Assessment::where('status', 'Draft')->count(),
+    ];
+
+    $recentPatients = Patient::latest()->take(5)->get();
+    $recentAssessments = Assessment::with('patient')->latest()->take(5)->get();
+
+    return view('dashboard', compact('stats', 'recentPatients', 'recentAssessments'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
