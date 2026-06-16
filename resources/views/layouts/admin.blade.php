@@ -32,15 +32,37 @@
                 'gender': (val) => ['Male', 'Female', 'Other'].includes(val),
                 'diagnosis': (val) => !val || (val.length >= 3 && val.length <= 255),
                 'hospital_department': (val) => !val || (val.length >= 3 && val.length <= 50),
-                'route_map': (val) => !val || (val.length >= 3 && val.length <= 500)
+                'route_map': (val) => !val || (val.length >= 3 && val.length <= 500),
+                // Assessment Rules
+                'assessment_date': (val) => !!val && new Date(val) <= new Date().setHours(23, 59, 59, 999),
+                'complaints.*': (val) => !val || (val.length >= 5 && val.length <= 500),
+                'medical_history.*.details': (val) => !val || val.length <= 120,
+                'medical_history.*.date': (val) => !val || new Date(val) <= new Date().setHours(23, 59, 59, 999),
+                'medication.*': (val) => !val || val.length <= 120
             };
 
             function getRuleKey(name) {
                 if (!name) return null;
-                // Convert array names like caregivers[0][name] to caregivers.*.name
-                // 1. Replace the first set of brackets with .*
-                // 2. Replace subsequent bracketed strings with .[string]
-                return name.replace(/\[\d+\]/g, '.*').replace(/\[([^\]]+)\]/g, '.$1');
+                
+                // 1. Convert all bracketed keys to dots: caregivers.0.name, medical_history.surgery.date
+                let key = name.replace(/\[(.*?)\]/g, '.$1').replace(/\.+$/, '');
+                
+                // 2. Map specific modules to wildcard patterns
+                if (key.startsWith('caregivers.')) {
+                    return key.replace(/caregivers\.\d+\./, 'caregivers.*.');
+                }
+                if (key.startsWith('medical_history.')) {
+                    if (key.endsWith('.details')) return 'medical_history.*.details';
+                    if (key.endsWith('.date')) return 'medical_history.*.date';
+                }
+                if (key.startsWith('complaints')) {
+                    return 'complaints.*';
+                }
+                if (key.startsWith('medication.')) {
+                    return 'medication.*';
+                }
+                
+                return key;
             }
 
             function clearErrorIfValid(input) {
@@ -53,11 +75,24 @@
                 if (rule && rule(input.value)) {
                     input.classList.remove('is-invalid');
                     // Find the sibling error message and hide it
-                    const parent = input.closest('div');
+                    const parent = input.closest('div') || input.closest('td');
                     const errorContainer = parent ? parent.querySelector('.invalid-feedback') : null;
                     if (errorContainer) {
                         errorContainer.classList.remove('d-block');
                         errorContainer.classList.add('d-none');
+                    }
+
+                    // Special case: Medical History Date Alert
+                    if (ruleKey === 'medical_history.*.date') {
+                        const allDateInputs = document.querySelectorAll('input[name^="medical_history"][name$="[date]"]');
+                        let anyInvalid = false;
+                        allDateInputs.forEach(el => {
+                            if (el.classList.contains('is-invalid')) anyInvalid = true;
+                        });
+                        if (!anyInvalid) {
+                            const alert = document.getElementById('history-date-alert');
+                            if (alert) alert.style.display = 'none';
+                        }
                     }
                 }
             }

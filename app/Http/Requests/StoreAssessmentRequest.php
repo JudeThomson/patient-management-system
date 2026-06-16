@@ -27,7 +27,7 @@ class StoreAssessmentRequest extends FormRequest
             'status' => 'required|string|in:Draft,Completed',
             'symptoms' => 'nullable|array',
             'complaints' => 'nullable|array',
-            'complaints.*' => 'nullable|string',
+            'complaints.*' => 'nullable|string|min:5|max:500',
             'pains' => 'nullable|array',
             'pains.*.pain_label' => 'required|string|in:A,B,C,D',
             'pains.*.duration' => 'nullable|string',
@@ -40,21 +40,24 @@ class StoreAssessmentRequest extends FormRequest
             'pains.*.impact_on_adls' => 'nullable|string',
             'pains.*.impact_on_person' => 'nullable|string',
             'medical_history' => 'nullable|array',
-            'medical_history.*.details' => 'nullable|string',
+            'medical_history.*.details' => 'nullable|string|max:120',
             'medical_history.*.date' => 'nullable|date|before_or_equal:today',
             'medication' => 'nullable|array',
-            'medication.diabetes_medicine' => 'nullable|string',
-            'medication.bp_medicine' => 'nullable|string',
-            'medication.chemo_medicine' => 'nullable|string',
-            'medication.pain_medicine' => 'nullable|string',
+            'medication.diabetes_medicine' => 'nullable|string|max:120',
+            'medication.bp_medicine' => 'nullable|string|max:120',
+            'medication.chemo_medicine' => 'nullable|string|max:120',
+            'medication.pain_medicine' => 'nullable|string|max:120',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'assessment_date.before_or_equal' => 'The date cannot be in the future.',
-            'medical_history.*.date.before_or_equal' => 'The date cannot be in the future.',
+            'assessment_date.before_or_equal' => 'Assessment date cannot be in the future.',
+            'medical_history.*.date.before_or_equal' => 'Future dates are not allowed.',
+            'complaints.*.min' => 'Presenting complaints must be at least 5 characters.',
+            'complaints.*.max' => 'Presenting complaints may not exceed 500 characters.',
+            'medication.*.max' => 'Medication details may not exceed 120 characters.',
         ];
     }
 }
