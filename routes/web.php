@@ -31,7 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('patients.assessments', AssessmentController::class)->shallow()->except(['index', 'destroy']);
     Route::get('/assessments', [AssessmentController::class, 'index'])->name('assessments.index');
     Route::get('/reports', function () { return view('placeholder', ['module' => 'Reports']); })->name('reports.index');
-    Route::get('/users', function () { return view('placeholder', ['module' => 'Users']); })->name('users.index')->middleware('role:Admin');
+    Route::resource('users', \App\Http\Controllers\UserController::class)->middleware('role:Admin');
     Route::get('/settings', function () { return view('placeholder', ['module' => 'Settings']); })->name('settings.index')->middleware('role:Admin');
 });
 

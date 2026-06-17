@@ -39,12 +39,6 @@
                     Forgot your password?
                 </a>
             @endif
-
-            @if (Route::has('register'))
-                <div class="mt-3 small">
-                    Don't have an account? <a href="{{ route('register') }}" class="text-decoration-none fw-bold">Register</a>
-                </div>
-            @endif
         </div>
     </form>
 </x-guest-layout>

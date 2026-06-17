@@ -41,12 +41,14 @@
 </head>
 <body>
     <div class="auth-card">
-        <div class="text-center mb-4">
-            <a href="/">
-                <i class="fas fa-hand-holding-medical medical-icon"></i>
+        <div class="mb-4">
+            <a href="/" class="d-flex align-items-center justify-content-center text-decoration-none">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="me-3" style="height: 65px; width: auto; object-fit: contain;">
+                <div class="text-start">
+                    <h4 class="fw-bold text-uppercase mb-0" style="letter-spacing: 1px; line-height: 1;">SREERAM CANCER TRUST</h4>
+                    <small class="text-muted">Healthcare Management System</small>
+                </div>
             </a>
-            <h4 class="fw-bold">Patient Info</h4>
-            <p class="text-muted">Healthcare Management System</p>
         </div>
 
         {{ $slot }}
