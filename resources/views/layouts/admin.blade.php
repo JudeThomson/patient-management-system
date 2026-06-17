@@ -113,13 +113,11 @@
     
     <style>
         :root {
-            --sidebar-width: 260px;
-            --navbar-height: 70px;
-            --brand-height: 90px;
+            --sidebar-width: 240px;
+            --navbar-height: 80px;
             --primary-blue: #0d6efd;
             --dark-text: #111827;
             --gray-text: #4b5563;
-            --border-color: #e5e7eb;
             --bg-color: #f8fafc;
         }
 
@@ -129,56 +127,56 @@
             color: var(--dark-text);
         }
 
+        /* Top Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: var(--navbar-height);
+            z-index: 1050;
+            background-color: #ffffff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            height: 100%;
+        }
+
+        .brand-logo {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+
+        .brand-text {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--dark-text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
         /* Sidebar Styles */
         .sidebar {
             position: fixed;
-            top: 0;
+            top: var(--navbar-height);
             bottom: 0;
             left: 0;
             z-index: 1040;
             width: var(--sidebar-width);
             background-color: #ffffff;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.03);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+            padding-top: 1.5rem;
             transition: all 0.3s;
-        }
-
-        .sidebar-header {
-            height: var(--brand-height);
-            display: flex;
-            align-items: center;
-            padding: 0 1.5rem;
-            background-color: #ffffff;
-        }
-
-        .sidebar-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            width: 100%;
-        }
-
-        .brand-logo {
-            height: 65px;
-            width: auto;
-            object-fit: contain;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .brand-text {
-            font-weight: 700;
-            font-size: 18px;
-            color: #111827;
-            line-height: 1.1;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            white-space: nowrap;
-        }
-
-        .sidebar-content {
-            height: calc(100vh - var(--brand-height));
-            overflow-y: auto;
-            padding: 1rem 0;
         }
 
         .nav-item {
@@ -215,20 +213,6 @@
             text-align: center;
         }
 
-        /* Navbar Styles */
-        .navbar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: var(--sidebar-width);
-            height: var(--navbar-height);
-            z-index: 1030;
-            background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-            padding: 0 1.5rem;
-            transition: all 0.3s;
-        }
-
         /* Main Content Styles */
         main {
             margin-left: var(--sidebar-width);
@@ -244,11 +228,14 @@
             .sidebar.show {
                 transform: translateX(0);
             }
-            .navbar {
-                left: 0;
-            }
             main {
                 margin-left: 0;
+            }
+            .brand-text {
+                font-size: 14px;
+            }
+            .brand-logo {
+                height: 40px;
             }
         }
 
@@ -264,75 +251,71 @@
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <nav id="sidebarMenu" class="sidebar">
-        <div class="sidebar-header">
-            <a class="sidebar-brand" href="{{ route('dashboard') }}">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="brand-logo">
-                <span class="brand-text">SREERAM CANCER TRUST</span>
-            </a>
-        </div>
-        <div class="sidebar-content">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('patients.*') ? 'active' : '' }}" href="{{ route('patients.index') }}">
-                        <i class="fas fa-user-injured"></i> Patients
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('assessments.*') ? 'active' : '' }}" href="{{ route('assessments.index') }}">
-                        <i class="fas fa-clipboard-check"></i> Assessments
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">
-                        <i class="fas fa-chart-line"></i> Reports
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
-                        <i class="fas fa-users"></i> Users
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('settings.*') ? 'active' : '' }}" href="{{ route('settings.index') }}">
-                        <i class="fas fa-cog"></i> Settings
-                    </a>
-                </li>
-            </ul>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button class="navbar-toggler d-lg-none me-3" type="button" onclick="document.getElementById('sidebarMenu').classList.toggle('show')">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand-container" href="{{ route('dashboard') }}">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="brand-logo">
+                    <span class="brand-text">SREERAM CANCER TRUST</span>
+                </a>
+            </div>
+            
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-dark fw-medium d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle fs-5 me-2"></i> {{ Auth::user()->name }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item py-2" href="{{ route('profile.edit') }}"><i class="fas fa-user-edit me-2"></i> Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item py-2 text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-expand-md navbar-light">
-        <div class="container-fluid p-0 d-flex justify-content-between">
-            <button class="navbar-toggler d-lg-none" type="button" onclick="document.getElementById('sidebarMenu').classList.toggle('show')">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="ms-auto d-flex align-items-center">
-                <div class="dropdown">
-                    <a class="nav-link dropdown-toggle text-dark fw-medium" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item py-2" href="{{ route('profile.edit') }}"><i class="fas fa-user-edit me-2"></i> Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="dropdown-item py-2 text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('patients.*') ? 'active' : '' }}" href="{{ route('patients.index') }}">
+                    <i class="fas fa-user-injured"></i> Patients
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('assessments.*') ? 'active' : '' }}" href="{{ route('assessments.index') }}">
+                    <i class="fas fa-clipboard-check"></i> Assessments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">
+                    <i class="fas fa-chart-line"></i> Reports
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                    <i class="fas fa-users"></i> Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('settings.*') ? 'active' : '' }}" href="{{ route('settings.index') }}">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </li>
+        </ul>
     </nav>
 
     <!-- Main Content -->
