@@ -23,7 +23,6 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:100'],
-            'username' => ['required', 'string', 'min:3', 'max:30', 'unique:users,username', 'regex:/^[a-zA-Z0-9_]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'role' => ['required', 'string', 'in:Admin,Staff'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -36,7 +35,7 @@ class StoreUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.regex' => 'The username may only contain letters, numbers, and underscores.',
+            // No custom messages needed for now
         ];
     }
 }

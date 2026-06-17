@@ -26,12 +26,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username', $user->username) }}" required>
-                            <div class="form-text">Min 3, Max 30. Letters, numbers, underscore only.</div>
-                            @error('username')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control bg-light" id="username" value="{{ $user->username }}" readonly>
+                            <div class="form-text">Username cannot be changed.</div>
                         </div>
 
                         <div class="mb-3">

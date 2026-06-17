@@ -48,4 +48,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Generate the next sequential username in the format USR00001.
+     *
+     * @return string
+     */
+    public static function generateNextUsername(): string
+    {
+        $lastUser = self::where('username', 'LIKE', 'PISCT%')
+            ->orderBy('username', 'desc')
+            ->first();
+
+        if (!$lastUser) {
+            return 'PISCT0001';
+        }
+
+        $lastNumber = (int) substr($lastUser->username, 5);
+        $nextNumber = $lastNumber + 1;
+
+        return 'PISCT' . str_pad((string) $nextNumber, 4, '0', STR_PAD_LEFT);
+    }
 }

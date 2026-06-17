@@ -26,7 +26,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $nextUsername = User::generateNextUsername();
+        return view('users.create', compact('nextUsername'));
     }
 
     /**
@@ -36,7 +37,7 @@ class UserController extends Controller
     {
         User::create([
             'name' => $request->name,
-            'username' => $request->username,
+            'username' => User::generateNextUsername(),
             'email' => $request->email,
             'role' => $request->role,
             'password' => Hash::make($request->password),
@@ -68,7 +69,6 @@ class UserController extends Controller
     {
         $data = [
             'name' => $request->name,
-            'username' => $request->username,
             'email' => $request->email,
             'role' => $request->role,
         ];

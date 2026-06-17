@@ -264,20 +264,17 @@
                 </a>
             </div>
             
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle text-dark fw-medium d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="d-flex align-items-center">
+                <span class="text-dark fw-medium d-flex align-items-center">
                     <i class="fas fa-user-circle fs-5 me-2"></i> {{ Auth::user()->name }}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item py-2" href="{{ route('profile.edit') }}"><i class="fas fa-user-edit me-2"></i> Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="dropdown-item py-2 text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</button>
-                        </form>
-                    </li>
-                </ul>
+                </span>
+                <span class="text-muted mx-3">|</span>
+                <form method="POST" action="{{ route('logout') }}" class="m-0">
+                    @csrf
+                    <button type="submit" class="btn btn-link text-danger fw-medium p-0 text-decoration-none d-flex align-items-center">
+                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>

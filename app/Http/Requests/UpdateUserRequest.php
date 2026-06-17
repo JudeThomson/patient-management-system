@@ -26,14 +26,6 @@ class UpdateUserRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'min:3', 'max:100'],
-            'username' => [
-                'required', 
-                'string', 
-                'min:3', 
-                'max:30', 
-                'regex:/^[a-zA-Z0-9_]+$/',
-                Rule::unique('users')->ignore($userId),
-            ],
             'email' => [
                 'required', 
                 'string', 
@@ -52,7 +44,7 @@ class UpdateUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.regex' => 'The username may only contain letters, numbers, and underscores.',
+            // No custom messages needed for now
         ];
     }
 }
