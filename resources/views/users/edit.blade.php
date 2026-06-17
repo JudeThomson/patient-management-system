@@ -41,10 +41,16 @@
 
                         <div class="mb-3">
                             <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
-                            <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
+                            <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required {{ auth()->id() === $user->id ? 'disabled' : '' }}>
                                 <option value="Admin" {{ old('role', $user->role) === 'Admin' ? 'selected' : '' }}>Admin</option>
                                 <option value="Staff" {{ old('role', $user->role) === 'Staff' ? 'selected' : '' }}>Staff</option>
                             </select>
+                            @if(auth()->id() === $user->id)
+                                <input type="hidden" name="role" value="{{ $user->role }}">
+                                <div class="form-text text-warning">
+                                    <i class="fas fa-exclamation-triangle"></i> You cannot change your own role.
+                                </div>
+                            @endif
                             @error('role')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

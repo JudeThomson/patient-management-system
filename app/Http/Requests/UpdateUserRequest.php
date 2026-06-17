@@ -22,20 +22,27 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user')->id;
+        $user = $this->route('user');
+        $isSelf = auth()->id() === $user->id;
 
-        return [
+        $rules = [
             'name' => ['required', 'string', 'min:3', 'max:100'],
             'email' => [
                 'required', 
                 'string', 
                 'email', 
                 'max:255', 
-                Rule::unique('users')->ignore($userId),
+                Rule::unique('users')->ignore($user->id),
             ],
             'role' => ['required', 'string', 'in:Admin,Staff'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ];
+
+        if ($isSelf) {
+            $rules['role'] = ['required', 'string', Rule::in([$user->role])];
+        }
+
+        return $rules;
     }
 
     /**
@@ -44,7 +51,7 @@ class UpdateUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            // No custom messages needed for now
+            'role.in' => 'You cannot change your own role.',
         ];
     }
 }
