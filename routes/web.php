@@ -32,7 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/assessments', [AssessmentController::class, 'index'])->name('assessments.index');
     Route::get('/reports', function () { return view('placeholder', ['module' => 'Reports']); })->name('reports.index');
     Route::resource('users', \App\Http\Controllers\UserController::class)->middleware('role:Admin');
-    Route::get('/settings', function () { return view('placeholder', ['module' => 'Settings']); })->name('settings.index')->middleware('role:Admin');
+    Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index')->middleware('role:Admin');
+    Route::post('/settings/backup', [\App\Http\Controllers\SettingsController::class, 'downloadBackup'])->name('settings.backup')->middleware('role:Admin');
 });
 
 Route::middleware('auth')->group(function () {
