@@ -33,6 +33,7 @@ class StorePatientRequest extends FormRequest
             'pincode' => 'nullable|string|max:10',
             'referred_by' => 'nullable|string|max:255',
             'hospital_department' => 'nullable|string|min:3|max:50',
+            'doctor' => 'nullable|string|max:255',
             'caregivers' => 'required|array|min:1',
             'caregivers.*.name' => 'required|string|min:3|regex:/^[a-zA-Z\s]+$/',
             'caregivers.*.relation' => 'required|string|min:2|max:50|regex:/^[a-zA-Z\s]+$/',

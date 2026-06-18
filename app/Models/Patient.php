@@ -23,6 +23,7 @@ class Patient extends Model
         'pincode',
         'referred_by',
         'hospital_department',
+        'doctor',
     ];
 
     /**

@@ -103,6 +103,10 @@
                             <span class="">{{ $patient->hospital_department ?? 'N/A' }}</span>
                         </div>
                         <div class="col-md-6 mb-3">
+                            <label class="fw-bold d-block mb-1">Doctor</label>
+                            <span class="">{{ $patient->doctor ?? 'N/A' }}</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label class="fw-bold d-block mb-1">Pincode</label>
                             <span class="">{{ $patient->pincode ?? 'N/A' }}</span>
                         </div>

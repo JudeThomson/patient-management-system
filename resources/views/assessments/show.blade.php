@@ -88,7 +88,13 @@
                                             <tr>
                                                 <td class="fw-bold">{{ $item['label'] }}</td>
                                                 <td>{{ $assessment->medicalHistory->{$item['details']} ?? 'N/A' }}</td>
-                                                <td>{{ $assessment->medicalHistory->{$item['date']} ?? 'N/A' }}</td>
+                                                <td>
+                                                    @if($assessment->medicalHistory && $assessment->medicalHistory->{$item['date']})
+                                                        {{ $assessment->medicalHistory->{$item['date']}->format('d-m-Y') }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

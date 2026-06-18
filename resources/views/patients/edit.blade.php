@@ -76,20 +76,25 @@
                                 <textarea name="route_map" class="form-control @error('route_map') is-invalid @enderror" rows="2">{{ old('route_map', $patient->route_map) }}</textarea>
                                 <x-input-error :messages="$errors->get('route_map')" class="mt-2" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label">Pincode</label>
                                 <input type="text" name="pincode" class="form-control @error('pincode') is-invalid @enderror" value="{{ old('pincode', $patient->pincode) }}">
                                 <x-input-error :messages="$errors->get('pincode')" class="mt-2" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label">Referred By</label>
                                 <input type="text" name="referred_by" class="form-control @error('referred_by') is-invalid @enderror" value="{{ old('referred_by', $patient->referred_by) }}">
                                 <x-input-error :messages="$errors->get('referred_by')" class="mt-2" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label">HOSP / DEPT.</label>
                                 <input type="text" name="hospital_department" class="form-control @error('hospital_department') is-invalid @enderror" value="{{ old('hospital_department', $patient->hospital_department) }}">
                                 <x-input-error :messages="$errors->get('hospital_department')" class="mt-2" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Doctor</label>
+                                <input type="text" name="doctor" class="form-control @error('doctor') is-invalid @enderror" value="{{ old('doctor', $patient->doctor) }}">
+                                <x-input-error :messages="$errors->get('doctor')" class="mt-2" />
                             </div>
                         </div>
                     </div>

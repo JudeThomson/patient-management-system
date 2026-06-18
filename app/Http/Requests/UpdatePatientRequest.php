@@ -34,6 +34,7 @@ class UpdatePatientRequest extends FormRequest
             'pincode' => 'nullable|string|max:10',
             'referred_by' => 'nullable|string|max:255',
             'hospital_department' => 'nullable|string|min:3|max:50',
+            'doctor' => 'nullable|string|max:255',
             'caregivers' => 'required|array|min:1',
             'caregivers.*.id' => 'nullable|exists:caregivers,id',
             'caregivers.*.name' => 'required|string|min:3|regex:/^[a-zA-Z\s]+$/',

@@ -42,6 +42,7 @@
         <div class="summary-grid">
             <div class="summary-col"><strong>Referred by:</strong> {{ $assessment->patient->referred_by ?? '' }}</div>
             <div class="summary-col"><strong>Hosp/Dept.:</strong> {{ $assessment->patient->hospital_department }}</div>
+            <div class="summary-col"><strong>Doctor:</strong> {{ $assessment->patient->doctor ?? 'N/A' }}</div>
         </div>
 
         <h3>Patient Information</h3>
@@ -111,16 +112,16 @@
         </ul>
     </div>
 
-    <div class="section">
+    {{-- <div class="section">
         <h3>10. Body Map: </h3>
         <div class="summary-grid">
             <div class="summary-col"> I HAVE NO IDEA HOW TO DO BODY PAIN MARKING SECTION!!!! </div>
         </div>
-    </div>
+    </div> --}}
 
     @if($assessment->pains->count() > 0)
     <div class="section">
-        <h3>11. Pain Evaluation</h3>
+        <h3>10. Pain Evaluation</h3>
         @foreach($assessment->pains as $pain)
             @if(!empty($pain->pain_score) || !empty($pain->quality))
             <div class="pain-card">
@@ -138,7 +139,7 @@
     @endif
 
     <div class="section">
-        <h3>12. Medical History</h3>
+        <h3>11. Medical History</h3>
         <table class="table">
             <thead><tr><th>Item</th><th>Details</th><th>Date</th></tr></thead>
             <tbody>
@@ -159,7 +160,13 @@
                     <tr>
                         <td>{{ $item['label'] }}</td>
                         <td>{{ $assessment->medicalHistory->{$item['details']} ?? 'N/A' }}</td>
-                        <td>{{ $assessment->medicalHistory->{$item['date']} ?? 'N/A' }}</td>
+                        <td>
+                            @if($assessment->medicalHistory && $assessment->medicalHistory->{$item['date']})
+                                {{ \Carbon\Carbon::parse($assessment->medicalHistory->{$item['date']})->format('d-m-Y') }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -167,7 +174,7 @@
     </div>
 
     <div class="section">
-        <h3>13. Recent Medication</h3>
+        <h3>12. Recent Medication</h3>
         <table class="table">
             <tr><th>Medicine</th><th>Details</th></tr>
             <tr><td>Diabetes</td><td>{{ $assessment->medication->diabetes_medicine ?? 'N/A' }}</td></tr>
