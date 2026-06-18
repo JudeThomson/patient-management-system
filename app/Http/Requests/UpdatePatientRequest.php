@@ -21,12 +21,13 @@ class UpdatePatientRequest extends FormRequest
      */
     public function rules(): array
     {
+        $patientId = $this->route('patient')->id;
         return [
             'name' => 'required|string|min:3|regex:/^[a-zA-Z\s]+$/',
             'sct_no' => 'nullable|string|max:15',
             'age' => 'required|integer|min:1|max:100',
             'gender' => 'required|string|in:Male,Female,Other',
-            'phone' => 'required|digits:10',
+            'phone' => 'required|digits:10|unique:patients,phone,' . $patientId,
             'diagnosis' => 'nullable|string|min:3|max:255',
             'address' => 'required|string|min:5|max:500',
             'route_map' => 'nullable|string|min:3|max:500',
@@ -46,6 +47,7 @@ class UpdatePatientRequest extends FormRequest
         return [
             'name.regex' => 'Patient Name must contain only letters and spaces.',
             'phone.digits' => 'Phone Number must be exactly 10 digits.',
+            'phone.unique' => 'This phone number is already registered to another patient.',
             'caregivers.*.name.regex' => 'Caregiver Name must contain only letters and spaces.',
             'caregivers.*.relation.regex' => 'Relationship must contain only letters and spaces.',
             'caregivers.*.contact_no.digits' => 'Contact Number must be exactly 10 digits.',
