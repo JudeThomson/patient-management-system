@@ -38,8 +38,9 @@
                     <thead class="table-light">
                         <tr>
                             <th class="ps-4">Patient ID</th>
-                            <th>Name</th>
-                            <th>Age/Gender</th>
+                            <th>Patient Name</th>
+                            <th>Gender</th>
+                            <th>Age</th>
                             <th>Phone</th>
                             <th>SCT No.</th>
                             <th class="text-end pe-4">Actions</th>
@@ -50,7 +51,8 @@
                             <tr>
                                 <td class="ps-4 fw-bold text-primary">{{ $patient->patient_id }}</td>
                                 <td>{{ $patient->name }}</td>
-                                <td>{{ $patient->age }} / {{ $patient->gender }}</td>
+                                <td>{{ $patient->gender }}</td>
+                                <td>{{ $patient->age }}</td>
                                 <td>{{ $patient->phone }}</td>
                                 <td>{{ $patient->sct_no ?? '-' }}</td>
                                 <td class="text-end pe-4">
