@@ -32,13 +32,5 @@
         <div class="d-grid gap-2 mb-3">
             <button type="submit" class="btn btn-primary">Log in</button>
         </div>
-
-        <div class="text-center">
-            @if (Route::has('password.request'))
-                <a class="text-decoration-none small d-block mb-1" href="{{ route('password.request') }}">
-                    Forgot your password?
-                </a>
-            @endif
-        </div>
     </form>
 </x-guest-layout>
