@@ -91,7 +91,7 @@
                                     <x-input-error :messages="$errors->get('medical_history.'.$key.'.details')" class="mt-1" />
                                 </td>
                                 <td>
-                                    <input type="date" name="medical_history[{{ $key }}][date]" class="form-control @error('medical_history.'.$key.'.date') is-invalid @enderror" value="{{ old('medical_history.'.$key.'.date', $assessment->medicalHistory?->{$key.'_date'} ?? '') }}" max="{{ date('Y-m-d') }}">
+                                    <input type="date" name="medical_history[{{ $key }}][date]" class="form-control @error('medical_history.'.$key.'.date') is-invalid @enderror" value="{{ old('medical_history.'.$key.'.date', $assessment->medicalHistory?->{$key.'_date'} ? $assessment->medicalHistory->{$key.'_date'}->format('Y-m-d') : '') }}" max="{{ date('Y-m-d') }}">
                                 </td>
                             </tr>
                             @endforeach

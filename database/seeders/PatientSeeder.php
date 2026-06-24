@@ -30,7 +30,7 @@ class PatientSeeder extends Seeder
 
         $hospitals = [
             'AIIMS', 'Apollo Hospital', 'Fortis Healthcare', 'Max Super Speciality Hospital',
-            'Manipal Hospital', 'Medanta - The Medicity', 'Sir Ganga Ram Hospital', 'Christian Medical College',
+            'Manipal Hospital', 'Medanta - The Medicity', 'Sir Ganga Ram Hospital', 'Christian Medical College', 'KIMS', 
         ];
 
         $departments = [
@@ -40,7 +40,7 @@ class PatientSeeder extends Seeder
         $latestPatient = Patient::latest('id')->first();
         $lastId = $latestPatient ? (int) str_replace('PAT', '', $latestPatient->patient_id) : 0;
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $lastId++;
             Patient::create([
                 'patient_id' => 'PAT' . str_pad($lastId, 6, '0', STR_PAD_LEFT),

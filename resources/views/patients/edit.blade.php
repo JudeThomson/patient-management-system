@@ -87,7 +87,7 @@
                                 <x-input-error :messages="$errors->get('referred_by')" class="mt-2" />
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">HOSP / DEPT.</label>
+                                <label class="form-label">Hospital</label>
                                 <input type="text" name="hospital_department" class="form-control @error('hospital_department') is-invalid @enderror" value="{{ old('hospital_department', $patient->hospital_department) }}">
                                 <x-input-error :messages="$errors->get('hospital_department')" class="mt-2" />
                             </div>
